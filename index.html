@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Inscription Scouts</title>
+<style>
+  :root{
+    --bg:#f4f6f5;
+    --card:#ffffff;
+    --primary:#1f7a4d;
+    --primary-dark:#155c39;
+    --accent:#e8b23b;
+    --text:#1e2a24;
+    --muted:#6b7a72;
+    --border:#dbe4de;
+    --danger:#c0392b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Tahoma, Arial, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    padding:24px;
+  }
+  h1{text-align:center;color:var(--primary-dark);margin-bottom:4px;}
+  .subtitle{text-align:center;color:var(--muted);margin-bottom:24px;}
+  .container{max-width:1050px;margin:0 auto;}
+  .card{
+    background:var(--card);
+    border-radius:14px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06);
+    padding:24px;
+    margin-bottom:24px;
+    border:1px solid var(--border);
+  }
+  .card h2{
+    margin-top:0;
+    color:var(--primary-dark);
+    font-size:18px;
+    border-bottom:2px solid var(--border);
+    padding-bottom:8px;
+  }
+  form{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .full{grid-column:1 / -1;}
+  label{display:block;font-weight:600;font-size:14px;margin-bottom:6px;}
+  input[type=text], input[type=tel], input[type=number], select{
+    width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);
+    font-size:14px;background:#fbfcfb;
+  }
+  input:focus, select:focus{outline:none;border-color:var(--primary);}
+  .radio-group{display:flex;gap:10px;flex-wrap:wrap;}
+  .radio-option{flex:1;min-width:100px;}
+  .radio-option input{display:none;}
+  .radio-option label{
+    display:block;text-align:center;padding:10px 8px;border-radius:8px;
+    border:1px solid var(--border);cursor:pointer;font-weight:500;font-size:13px;
+    margin:0;background:#fbfcfb;transition:all .15s;
+  }
+  .radio-option input:checked + label{background:var(--primary);border-color:var(--primary);color:#fff;}
+  .btn{padding:12px 22px;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-excel{background:var(--accent);color:#1e2a24;}
+  .btn-excel:hover{background:#d19f2b;}
+  .btn-danger{background:transparent;color:var(--danger);border:1px solid var(--danger);padding:6px 10px;font-size:13px;}
+  .btn-danger:hover{background:var(--danger);color:#fff;}
+  .actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th, td{padding:10px 8px;text-align:center;border-bottom:1px solid var(--border);}
+  th{background:#eef4f0;color:var(--primary-dark);font-weight:700;}
+  tr:hover{background:#f7faf8;}
+  .empty{text-align:center;color:var(--muted);padding:30px;}
+  .badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600;}
+  .badge-green{background:#e1f3e7;color:var(--primary-dark);}
+  .badge-red{background:#fbe3e0;color:var(--danger);}
+  .badge-gold{background:#fbf1dc;color:#a3781a;}
+  .table-wrap{overflow-x:auto;}
+  .submit-row{grid-column:1/-1;text-align:center;margin-top:10px;}
+  .count{color:var(--muted);font-size:14px;}
+  #statusMsg{text-align:center;font-size:13px;color:var(--danger);min-height:18px;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🏕️ Inscription Scouts</h1>
+  <p class="subtitle">Formulaire d'inscription et suivi des membres — connecté à l'API FastAPI</p>
+
+  <div class="card">
+    <h2>Nouvelle inscription</h2>
+    <form id="regForm">
+      <div class="full">
+        <label>Nom et prénom</label>
+        <input type="text" id="nom" required placeholder="Nom complet">
+      </div>
+
+      <div class="full">
+        <label>Type (Dalila)</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="dalila" id="d1" value="Mourchida" required>
+            <label for="d1">Mourchida</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="dalila" id="d2" value="Jawala">
+            <label for="d2">Jawala</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="dalila" id="d3" value="Kachef">
+            <label for="d3">Kachef</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="dalila" id="d4" value="Dalila">
+            <label for="d4">Dalila</label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label>Numéro de téléphone</label>
+        <input type="tel" id="tel" required placeholder="XX XXX XXX">
+      </div>
+
+      <div>
+        <label>Âge</label>
+        <input type="number" id="age" required min="1" max="100">
+      </div>
+
+      <div>
+        <label>Taille de pull</label>
+        <select id="taille" required>
+          <option value="">-- Choisir --</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Statut</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="statut" id="s1" value="Jdid" required>
+            <label for="s1">Jdid</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="statut" id="s2" value="9dim">
+            <label for="s2">9dim</label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label>Paiement</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="paiement" id="p1" value="Total" required>
+            <label for="p1">Total</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="paiement" id="p2" value="Avance">
+            <label for="p2">Avance</label>
+          </div>
+        </div>
+      </div>
+
+      <div id="montantWrap" style="display:none;">
+        <label>Montant avance (DT)</label>
+        <input type="number" id="montant" min="0" step="0.5" placeholder="Montant payé">
+      </div>
+
+      <div>
+        <label>CNSS</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="cnss" id="c1" value="Oui" required>
+            <label for="c1">Oui</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="cnss" id="c2" value="Non">
+            <label for="c2">Non</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="full">
+        <label>Ichtirak Sanawi</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="ichtirak" id="i1" value="Khales" required>
+            <label for="i1">5alas</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="ichtirak" id="i2" value="Non paye">
+            <label for="i2">Le</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+        <p id="statusMsg"></p>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="actions">
+      <h2 style="border:none;padding:0;margin:0;">Liste des inscrits</h2>
+      <div>
+        <span class="count" id="countLabel"></span>
+        <button class="btn btn-excel" id="exportBtn">📊 Exporter Excel</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Tél</th>
+            <th>Âge</th>
+            <th>Pull</th>
+            <th>Statut</th>
+            <th>Paiement</th>
+            <th>Montant</th>
+            <th>CNSS</th>
+            <th>Ichtirak</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+      <div class="empty" id="emptyMsg">Aucune inscription pour le moment.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "/api";
+let people = [];
+
+async function loadPeople(){
+  try{
+    const res = await fetch(`${API}/people`);
+    people = await res.json();
+    render();
+  }catch(e){
+    document.getElementById('statusMsg').textContent = "Impossible de contacter le serveur.";
+  }
+}
+
+function badge(value, type){
+  if(type === 'cnss') return value === 'Oui' ? `<span class="badge badge-green">Oui</span>` : `<span class="badge badge-red">Non</span>`;
+  if(type === 'ichtirak') return value === 'Khales' ? `<span class="badge badge-green">5alas</span>` : `<span class="badge badge-red">Le</span>`;
+  if(type === 'paiement') return value === 'Total' ? `<span class="badge badge-green">Total</span>` : `<span class="badge badge-gold">Avance</span>`;
+  return value;
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function render(){
+  const tbody = document.getElementById('tableBody');
+  const emptyMsg = document.getElementById('emptyMsg');
+  document.getElementById('countLabel').textContent = people.length + ' inscrit(s)';
+
+  if(people.length === 0){
+    tbody.innerHTML = '';
+    emptyMsg.style.display = 'block';
+    return;
+  }
+  emptyMsg.style.display = 'none';
+
+  tbody.innerHTML = people.map(p => `
+    <tr>
+      <td style="text-align:left;font-weight:600;">${escapeHtml(p.nom)}</td>
+      <td>${escapeHtml(p.dalila)}</td>
+      <td>${escapeHtml(p.tel)}</td>
+      <td>${escapeHtml(String(p.age))}</td>
+      <td>${escapeHtml(p.taille)}</td>
+      <td>${escapeHtml(p.statut)}</td>
+      <td>${badge(p.paiement,'paiement')}</td>
+      <td>${p.paiement === 'Avance' ? (p.montant ? escapeHtml(String(p.montant)) + ' DT' : '-') : '<span style="color:var(--muted);">-</span>'}</td>
+      <td>${badge(p.cnss,'cnss')}</td>
+      <td>${badge(p.ichtirak,'ichtirak')}</td>
+      <td><button class="btn btn-danger" onclick="deletePerson('${p.id}')">Suppr.</button></td>
+    </tr>
+  `).join('');
+}
+
+async function deletePerson(id){
+  if(!confirm('Supprimer cette inscription ?')) return;
+  await fetch(`${API}/people/${id}`, { method: 'DELETE' });
+  people = people.filter(p => p.id !== id);
+  render();
+}
+
+document.querySelectorAll('input[name=paiement]').forEach(function(radio){
+  radio.addEventListener('change', function(){
+    const montantWrap = document.getElementById('montantWrap');
+    const montantInput = document.getElementById('montant');
+    if(this.value === 'Avance'){
+      montantWrap.style.display = 'block';
+      montantInput.required = true;
+    }else{
+      montantWrap.style.display = 'none';
+      montantInput.required = false;
+      montantInput.value = '';
+    }
+  });
+});
+
+document.getElementById('regForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const statusMsg = document.getElementById('statusMsg');
+  statusMsg.textContent = '';
+
+  const paiement = document.querySelector('input[name=paiement]:checked').value;
+  const payload = {
+    nom: document.getElementById('nom').value.trim(),
+    dalila: document.querySelector('input[name=dalila]:checked').value,
+    tel: document.getElementById('tel').value.trim(),
+    age: parseInt(document.getElementById('age').value, 10),
+    taille: document.getElementById('taille').value,
+    statut: document.querySelector('input[name=statut]:checked').value,
+    paiement: paiement,
+    montant: paiement === 'Avance' ? parseFloat(document.getElementById('montant').value || 0) : null,
+    cnss: document.querySelector('input[name=cnss]:checked').value,
+    ichtirak: document.querySelector('input[name=ichtirak]:checked').value
+  };
+
+  try{
+    const res = await fetch(`${API}/people`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if(!res.ok) throw new Error('save failed');
+    const saved = await res.json();
+    people.unshift(saved);
+    render();
+    this.reset();
+    document.getElementById('montantWrap').style.display = 'none';
+  }catch(err){
+    statusMsg.textContent = "Erreur d'enregistrement, réessayez.";
+  }
+});
+
+document.getElementById('exportBtn').addEventListener('click', function(){
+  window.location.href = `${API}/export`;
+});
+
+loadPeople();
+</script>
+</body>
+</html>
